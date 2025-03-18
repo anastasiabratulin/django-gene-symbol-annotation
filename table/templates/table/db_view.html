@@ -1,0 +1,44 @@
+<form method="GET">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search">
+    <button type="submit">Search</button>
+ </form>
+ 
+ <table>
+    <thead>
+        <tr>
+            <th>Primary Gene Symbol</th>
+            <th>Symbol</th>
+            <th>Concept ID</th>
+            <th>Relationship</th>
+            <th>Source</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in page_obj %}
+            <tr>
+                <td>{{ row.primary_gene_symbol }}</td>
+                <td>{{ row.symbol }}</td>
+                <td>{{ row.concept_id }}</td>
+                <td>{{ row.relationship }}</td>
+                <td>{{ row.source }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+ </table>
+ 
+ <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1&q={{ query }}">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}">Previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&q={{ query }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}">Last</a>
+        {% endif %}
+    </span>
+ </div>
+ 
